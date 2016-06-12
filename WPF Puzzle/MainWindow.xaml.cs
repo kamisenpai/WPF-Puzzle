@@ -24,7 +24,8 @@ namespace WPF_Puzzle
     {
         Piece[,] table = new Piece[7, 7];
         Point pos = new Point(0, 0);
-        bool isRunning = false;
+        bool isRunning = false;        
+
 
         public MainWindow()
         {
@@ -35,7 +36,6 @@ namespace WPF_Puzzle
         //initializeaza jocul
         private void StartGame(int pieces)
         {
-            int o;
             int pieceSizeWidth = (int)myGrid.Width / pieces; int pieceSizeHeight = (int)myGrid.Height / pieces;
             pos.X = pieces - 1;
             pos.Y = pieces - 1;
@@ -61,7 +61,7 @@ namespace WPF_Puzzle
             BitmapImage src = new BitmapImage();
             OpenFileDialog OFD = new OpenFileDialog();
             OFD.Title = " Load an Image";
-            OFD.Filter = "All JPG Images (*.jpg) | *.JPG";
+            OFD.Filter = "All JPG Images (*.jpg) | *.JPG|All PNG Images (*.png) | *.PNG|All files (*.*)| *.*";
             if (OFD.ShowDialog() == true)
             {
                 try
@@ -77,13 +77,13 @@ namespace WPF_Puzzle
                 catch
                 {
                     image.Source = null;
-                    MessageBox.Show("Imaginea nu e valida.", "Eroare", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("The image is not valid.", "Eroare", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             else
             {
                 image.Source = null;
-                MessageBox.Show("Nu ai ales nici o imagine.", "Informatie", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("You didn't picked a image.", "Informatie", MessageBoxButton.OK, MessageBoxImage.Information);
             }
 
         }
@@ -94,9 +94,9 @@ namespace WPF_Puzzle
             ImageBrush ib = new ImageBrush();
             ib.Stretch = Stretch.UniformToFill;
             BitmapSource bmpImage;
-            bmpImage = (BitmapImage)ResizeImage(img, (int)myGrid.Width, (int)myGrid.Height).Source;
-            //(BitmapImage)img.Source;
-
+            bmpImage = (BitmapImage)img.Source;
+            bmpImage = (BitmapImage)ResizeImage(img, (int)myGrid.Width, (int)myGrid.Height).Source;       
+            //bmpImage = (BitmapImage)img.Source;
             bmpImage = GenerateCroppedImage(bmpImage, new Point(fromX, fromY), WidthSize, HeightSize);
             ib.ImageSource = bmpImage;
             return ib;
@@ -130,16 +130,16 @@ namespace WPF_Puzzle
             int targetWidth = (int)Math.Round(width, 0);
             int targetHeight = (int)Math.Round(height, 0);
 
-            double targetWidthInScreenUnits = targetWidth / sourceDpiX * wpfUnitsX;
-            double targetHeightInScreenUnits = targetHeight / sourceDpiY * wpfUnitsY;
+            double targetWidthInScreenUnits = source.PixelWidth / sourceDpiX * wpfUnitsX;
+            double targetHeightInScreenUnits = source.PixelHeight / sourceDpiY * wpfUnitsY;
 
             //double sourceWidthInScreenUnits = source.PixelWidth / sourceDpiX * wpfUnitsX;
             //double sourceHeightInScreenUnits = source.PixelHeight / sourceDpiY * wpfUnitsY;
 
             // Muta punctele in dreapta sus
             TranslateTransform translateTransform = new TranslateTransform();
-            translateTransform.X = -1 * (centerPointXInScreenUnits);
-            translateTransform.Y = -1 * (centerPointYInScreenUnits);
+            translateTransform.X = -1 * (centerPointXInScreenUnits );
+            translateTransform.Y = -1 * (centerPointYInScreenUnits );
 
             TransformGroup transformGroup = new TransformGroup();
 
@@ -147,7 +147,7 @@ namespace WPF_Puzzle
 
             //Intinde imaginea astfel incat sa incapa pe butoane
             Image image = new Image();
-            image.Stretch = Stretch.Fill;
+            image.Stretch = Stretch.None;
             image.Source = source;
             image = ResizeImage(image, (int)myGrid.Width, (int)myGrid.Height);
             image.RenderTransform = transformGroup;
@@ -156,13 +156,12 @@ namespace WPF_Puzzle
             Canvas container = new Canvas();
             container.Children.Add(image);
             container.Arrange(new Rect(0, 0, source.PixelWidth, source.PixelHeight));
-
             // Creeaza sursa Bitmap
             RenderTargetBitmap target = new RenderTargetBitmap(targetWidth, targetHeight, sourceDpiX, sourceDpiY, PixelFormats.Default);
             target.Render(container);
-
             return target;
         }
+      
 
         //initializeaza matricea de butoane 
         private void initTable(int pieces, int pieceSizeWidth, int pieceSizeHeight, Image img)
@@ -329,7 +328,7 @@ namespace WPF_Puzzle
                 }
                 if (ok == true)
                 {
-                    var newGame = MessageBox.Show("Felicitari, ai castigat!", "Felicitari", MessageBoxButton.OK, MessageBoxImage.Information);
+                    var newGame = MessageBox.Show("Congratulations, you won!", "Congratulations", MessageBoxButton.OK, MessageBoxImage.Information);
                     isRunning = false;
                     slValue.IsEnabled = true;
                     txt_diffic.IsEnabled = true;
@@ -472,6 +471,11 @@ namespace WPF_Puzzle
             btn_imgprev.IsEnabled = true;
             previewWindow = null;
 
+        }
+
+        private void btn_help_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("This is a slider puzzle. You can select the difficulty at the beginning with the slider on the right or you can write the difficulty in the textbox, it goes from 3 to 7 (a.k.a. 3x3 to 7x7) \n \n Once you have set the difficulty you press the 'start game' button and you need to choose a jpg photo from your PC.After that the game will start and you can move the empty piece with the keyboard buttons 'WASD' or by clicking the piece you want to move.When you put all the pieces together, you will win the game. \n \n Also, you can preview your photo if you want and if you want to reset the game, just press the 'reset' button and you can choose another photo or another difficulty.", "MVP exam project in WPF C#", MessageBoxButton.OK,MessageBoxImage.Information);
         }
         // previewWindow.Show();         
     }

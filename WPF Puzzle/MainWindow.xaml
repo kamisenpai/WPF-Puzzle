@@ -20,8 +20,8 @@
 
         <Grid x:Name="myGrid" HorizontalAlignment="Left" Height="600" Margin="0,0,-1013,0" VerticalAlignment="Top" Width="600"/>
         <Image x:Name="img_piece" Height="239" Width="251" Margin="566,377,10,10" Stretch="Fill" Visibility="Hidden"/>
-        <Image x:Name="image" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden" Stretch="UniformToFill" />
-        <Button x:Name="btn_start" Content="" HorizontalAlignment="Left" Height="63" Margin="628,42,0,0" VerticalAlignment="Top" Width="129" Click="btn_start_Click">
+        <Image x:Name="image" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden" Stretch="Fill" />
+        <Button x:Name="btn_start" Content="" HorizontalAlignment="Left" Height="63" Margin="628,41,0,0" VerticalAlignment="Top" Width="129" Click="btn_start_Click">
             <Button.Effect>
                 <DropShadowEffect/>
             </Button.Effect>
@@ -32,12 +32,12 @@
                 <ImageBrush ImageSource="Icons/play_button.png"/>
             </Button.Background>
         </Button>
-        <StackPanel HorizontalAlignment="Left" Height="374" Margin="680,10,-32,0" VerticalAlignment="Top" Width="211">
+        <StackPanel HorizontalAlignment="Left" Height="374" Margin="681,26,-77,0" VerticalAlignment="Top" Width="211">
             <Slider Maximum="7" Minimum="3" TickPlacement="BottomRight" TickFrequency="1" IsSnapToTickEnabled="True" x:Name="slValue"  Orientation="Vertical" Height="236" HorizontalAlignment="Center" />
             <TextBox x:Name="txt_diffic" Text="{Binding Value, ElementName=slValue, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Left"  Width="30" Height="30" Margin="88,0" FontSize="16" PreviewTextInput="TextBox_PreviewTextInput"  />
         </StackPanel>
-        <Label x:Name="label" Content="Alege Dificultatea --&gt;" HorizontalAlignment="Left" Height="27" Margin="600,0,0,0" VerticalAlignment="Top" Width="167" FontSize="16"/>
-        <Button x:Name="btn_reset" Content="" HorizontalAlignment="Left" Height="63" Margin="628,133,0,0" VerticalAlignment="Top" Width="129" Click="btn_reset_Click" IsEnabled="False" >
+        <Label x:Name="label" Content="Select Difficulty --&gt;" HorizontalAlignment="Left" Height="41" Margin="628,10,0,0" VerticalAlignment="Top" Width="167" FontSize="16"/>
+        <Button x:Name="btn_reset" Content="" HorizontalAlignment="Left" Height="63" Margin="628,130,0,0" VerticalAlignment="Top" Width="129" Click="btn_reset_Click" IsEnabled="False" >
             <Button.Effect>
                 <DropShadowEffect/>
             </Button.Effect>
@@ -59,7 +59,18 @@
                 <ImageBrush ImageSource="Icons/preview_button.jpg"/>
             </Button.Background>
         </Button>
-        <Label x:Name="label1" Content="Szalay Gabriel-Liviu" HorizontalAlignment="Left" Height="30" Margin="605,570,0,0" VerticalAlignment="Top" Width="190" FontWeight="Bold" FontSize="16" />
+        <Label x:Name="label1" Content="Gabriel Liviu Szalay" HorizontalAlignment="Left" Height="30" Margin="605,570,0,0" VerticalAlignment="Top" Width="190" FontWeight="Bold" FontSize="16" />
+        <Button x:Name="btn_help" Content="" HorizontalAlignment="Left" Height="137" Margin="628,321,0,0" VerticalAlignment="Top" Width="129" Click="btn_help_Click"  >
+            <Button.Effect>
+                <DropShadowEffect/>
+            </Button.Effect>
+            <Button.OpacityMask>
+                <ImageBrush ImageSource="Icons/help_button.png"/>
+            </Button.OpacityMask>
+            <Button.Background>
+                <ImageBrush ImageSource="Icons/help_button.png"/>
+            </Button.Background>
+        </Button>
 
 
 
